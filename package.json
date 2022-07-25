@@ -1,6 +1,6 @@
 {
   "name": "@dek_npm/react-responsive",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "",
   "main": "dist/index.js",
   "source": "src/index.ts",

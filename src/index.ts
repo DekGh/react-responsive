@@ -3,8 +3,8 @@ import {useEffect, useState, ReactNode} from "react";
 const keySwitcher = {
     maxWidth: (maxWidth: number) => `(max-width: ${maxWidth}px)`,
     minWidth: (minWidth: number) => `(min-width: ${minWidth}px)`,
-    minResolution: (minResolution: `${number}ddpx` | number) => typeof minResolution === `number` ? `(min-resolution: ${minResolution}dppx)` : `(min-resolution: ${minResolution})`,
-    maxResolution: (maxResolution: `${number}ddpx` | number) => typeof maxResolution === `number` ? `(max-resolution: ${maxResolution}ddpx)` : `(max-resolution: ${maxResolution})`,
+    minResolution: (minResolution: `${number}dppx` | number) => typeof minResolution === `number` ? `(min-resolution: ${minResolution}dppx)` : `(min-resolution: ${minResolution})`,
+    maxResolution: (maxResolution: `${number}dppx` | number) => typeof maxResolution === `number` ? `(max-resolution: ${maxResolution}ddpx)` : `(max-resolution: ${maxResolution})`,
     minHeight: (minHeight: number) => `(min-height: ${minHeight}px)`,
     maxHeight: (maxHeight: number) => `(max-height: ${maxHeight}px)`,
     orientation: (orientation: string | number) => `(orientation: ${orientation})`
