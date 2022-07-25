@@ -1,2 +1,79 @@
-import{useState as e,useEffect as t}from"react";const n=["children"],i={maxWidth:e=>`(max-width: ${e}px)`,minWidth:e=>`(min-width: ${e}px)`,minResolution:e=>"string"==typeof e?`(min-resolution: ${e})`:`(min-resolution: ${e}dppx)`,maxResolution:e=>`(min-resolution: ${e})`,minHeight:e=>`(min-height: ${e}px)`,maxHeight:e=>`(max-height: ${e}px)`,orientation:e=>`(orientation: ${e})`},o=e=>{let{children:t}=e,o=function(e,t){if(null==e)return{};var n,i,o={},r=Object.keys(e);for(i=0;i<r.length;i++)t.indexOf(n=r[i])>=0||(o[n]=e[n]);return o}(e,n);const a=Object.keys(o)[0],m=Object.values(o)[0],h=i[a](m),s=r({query:h});return"function"==typeof t?t(s):s?t:null},r=n=>{let i=window.matchMedia(n.query);const[o,r]=e(i.matches),a=e=>{r(!!e.matches)};return t(()=>(i.addEventListener("change",a),()=>i.removeEventListener("change",a)),[]),o};export{o as default,r as useMediaQuery};
+import { useState, useEffect } from 'react';
+
+function _objectWithoutPropertiesLoose(source, excluded) {
+  if (source == null) return {};
+  var target = {};
+  var sourceKeys = Object.keys(source);
+  var key, i;
+
+  for (i = 0; i < sourceKeys.length; i++) {
+    key = sourceKeys[i];
+    if (excluded.indexOf(key) >= 0) continue;
+    target[key] = source[key];
+  }
+
+  return target;
+}
+
+var _excluded = ["children"];
+var keySwitcher = {
+  maxWidth: function maxWidth(_maxWidth) {
+    return "(max-width: " + _maxWidth + "px)";
+  },
+  minWidth: function minWidth(_minWidth) {
+    return "(min-width: " + _minWidth + "px)";
+  },
+  minResolution: function minResolution(_minResolution) {
+    return typeof _minResolution === "number" ? "(min-resolution: " + _minResolution + "dppx)" : "(min-resolution: " + _minResolution + ")";
+  },
+  maxResolution: function maxResolution(_maxResolution) {
+    return typeof _maxResolution === "number" ? "(max-resolution: " + _maxResolution + "ddpx)" : "(max-resolution: " + _maxResolution + ")";
+  },
+  minHeight: function minHeight(_minHeight) {
+    return "(min-height: " + _minHeight + "px)";
+  },
+  maxHeight: function maxHeight(_maxHeight) {
+    return "(max-height: " + _maxHeight + "px)";
+  },
+  orientation: function orientation(_orientation) {
+    return "(orientation: " + _orientation + ")";
+  }
+};
+
+var MediaQuery = function MediaQuery(_ref) {
+  var children = _ref.children,
+      setting = _objectWithoutPropertiesLoose(_ref, _excluded);
+
+  var getQuery = Object.entries(setting).map(function (_ref2) {
+    var key = _ref2[0],
+        value = _ref2[1];
+    return keySwitcher[key](value);
+  }).join(" and ");
+  var matches = useMediaQuery({
+    query: getQuery
+  });
+  return typeof children === 'function' ? children(matches) : matches ? children : null;
+};
+var useMediaQuery = function useMediaQuery(media) {
+  var mql = window.matchMedia(media.query);
+
+  var _useState = useState(mql.matches),
+      value = _useState[0],
+      setValue = _useState[1];
+
+  var screenTest = function screenTest(e) {
+    e.matches ? setValue(true) : setValue(false);
+  };
+
+  useEffect(function () {
+    setValue(mql.matches);
+    mql.addEventListener('change', screenTest);
+    return function () {
+      mql.removeEventListener('change', screenTest);
+    };
+  }, [media.query]);
+  return value;
+};
+
+export { MediaQuery as default, useMediaQuery };
 //# sourceMappingURL=index.modern.mjs.map
