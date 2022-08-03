@@ -1,5 +1,19 @@
 import {useEffect, useState, ReactNode} from "react";
 
+interface MediaProps {
+    maxWidth?: number;
+    minWidth?: number;
+    minResolution?: `${number}ddpx` | number;
+    maxResolution?: `${number}ddpx` | number;
+    minHeight?: number;
+    maxHeight?: number;
+    orientation?: string;
+}
+
+type Props = {
+    children: (data: boolean) => ReactNode | ReactNode;
+} & MediaProps
+
 const keySwitcher = {
     maxWidth: (maxWidth: number) => `(max-width: ${maxWidth}px)`,
     minWidth: (minWidth: number) => `(min-width: ${minWidth}px)`,
@@ -7,18 +21,12 @@ const keySwitcher = {
     maxResolution: (maxResolution: `${number}dppx` | number) => typeof maxResolution === `number` ? `(max-resolution: ${maxResolution}ddpx)` : `(max-resolution: ${maxResolution})`,
     minHeight: (minHeight: number) => `(min-height: ${minHeight}px)`,
     maxHeight: (maxHeight: number) => `(max-height: ${maxHeight}px)`,
-    orientation: (orientation: string | number) => `(orientation: ${orientation})`
-};
-
-type Props = {
-    children: (data: boolean) => void | ReactNode;
-}
+    orientation: (orientation: string) => `(orientation: ${orientation})`
+} as any
 
 const MediaQuery = ({children, ...setting}: Props) => {
 
-    const getQuery = Object.entries(setting).map(([key, value]) => {
-        return  keySwitcher[key as keyof typeof keySwitcher](value)
-    }).join(" and ")
+    const getQuery = Object.entries(setting).map(([key, value]) => { return  keySwitcher[key as keyof typeof keySwitcher](value) }).join(" and ")
 
     const matches = useMediaQuery({query: getQuery})
 
