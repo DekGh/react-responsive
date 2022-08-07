@@ -55,17 +55,20 @@ var MediaQuery = function MediaQuery(_ref) {
   return typeof children === 'function' ? children(matches) : matches ? children : null;
 };
 var useMediaQuery = function useMediaQuery(media) {
-  var mql = window.matchMedia(media.query);
-
-  var _useState = useState(mql.matches),
+  var _useState = useState(function () {
+    var initialState = window.matchMedia(media.query).matches;
+    return initialState;
+  }),
       value = _useState[0],
       setValue = _useState[1];
 
-  var screenTest = function screenTest(e) {
-    e.matches ? setValue(true) : setValue(false);
-  };
-
   useEffect(function () {
+    var mql = window.matchMedia(media.query);
+
+    var screenTest = function screenTest(e) {
+      setValue(e.matches);
+    };
+
     setValue(mql.matches);
     mql.addEventListener('change', screenTest);
     return function () {

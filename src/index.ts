@@ -37,13 +37,16 @@ export default MediaQuery
 
 export const useMediaQuery = (media: {query: string}): boolean => {
 
-    const mql = window.matchMedia(media.query)
-
-    const [value, setValue] = useState(mql.matches)
-
-    const screenTest = (e: MediaQueryListEvent): void => { e.matches ? setValue(true) : setValue(false) }
+    const [value, setValue] = useState(() => {
+        const initialState = window.matchMedia(media.query).matches
+        return initialState
+    })
 
     useEffect(() => {
+        const mql = window.matchMedia(media.query)
+
+        const screenTest = (e: MediaQueryListEvent): void => { setValue(e.matches) }
+
         setValue(mql.matches)
 
         mql.addEventListener('change', screenTest)
