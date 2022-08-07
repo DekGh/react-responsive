@@ -1,12 +1,13 @@
 {
   "name": "@dek_npm/react-responsive",
-  "version": "1.0.5",
+  "version": "1.0.9",
   "description": "",
   "main": "dist/index.js",
   "source": "src/index.ts",
   "module": "dist/index.modern.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
+    "build": "microbundle --no-compress --globals react=React --strict",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
